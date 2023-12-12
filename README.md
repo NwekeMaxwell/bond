@@ -12,8 +12,8 @@ This project uses:
 ### Backend
 
 - `cd bond-backend`
--
--
+- `npm i`
+- `nodemon server.js`
 
 ### Running the Nextjs Frontend
 
