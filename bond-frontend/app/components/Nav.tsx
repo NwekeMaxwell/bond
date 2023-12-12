@@ -1,8 +1,8 @@
 export default function Nav() {
   return (
     <>
-      <div className='bg-[#E8E8E6] opacity-[0.8] h-[10vh] fixed top-0 left-0 w-full'></div>
-      <nav className='bg-transparent fixed top-0 left-0 w-full'>
+      <div className='bg-[#E8E8E6] opacity-[0.8] h-[10vh] fixed top-0 left-0 w-full z-[100]'></div>
+      <nav className='bg-transparent fixed top-0 left-0 w-full z-[101]'>
         {/* Small Screen */}
 
         {/* Large Screen */}
