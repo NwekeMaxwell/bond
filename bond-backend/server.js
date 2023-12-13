@@ -5,10 +5,15 @@ const app = express();
 const port = 3000;
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection;
 db.on("error", (error) => console.error("db error", error));
 db.once("open", () => console.log("Connected to Database"));
+
+app.use(express.json());
+
+const bondusersRouter = require("./routes/users");
+app.use("/users", bondusersRouter);
 
 app.listen(port, () => {
   console.log(`Bond app listening on port ${port}`);
@@ -29,3 +34,6 @@ app.listen(port, () => {
 // initialise mongoose, mongoose connect
 // define the db.on and db.once
 // connect dotenv file and remove any raw url in the code
+//db done, server done, lets create route for our server and make our server accept json
+//create the routes folder and a file for your intended router(users.js)
+//model app.use to suit the above route
