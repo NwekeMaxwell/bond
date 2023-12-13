@@ -2,10 +2,9 @@ require("dotenv").config();
 
 const express = require("express");
 const app = express();
-const port = 3000;
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.DATABASE_URL);
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", (error) => console.error("db error", error));
 db.once("open", () => console.log("Connected to Database"));
@@ -15,8 +14,8 @@ app.use(express.json());
 const bondusersRouter = require("./routes/users");
 app.use("/users", bondusersRouter);
 
-app.listen(port, () => {
-  console.log(`Bond app listening on port ${port}`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Bond app listening on port ${process.env.PORT}`);
 });
 
 //////////////////////////////////////////////////////////

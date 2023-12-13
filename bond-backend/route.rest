@@ -3,3 +3,26 @@ GET http://localhost:3000/users
 ###
 
 GET http://localhost:3000/users/2179
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name" : "Amazing user",
+    "subscribedToChannel" : "web dev simple"
+}
+
+###
+
+DELETE http://localhost:3000/user/21ewddsw23
+
+###
+
+PATCH http://localhost:3000/user/21ewddsw23
+Content-Type: application/json
+
+{
+    "name" : "Amazing"
+}
