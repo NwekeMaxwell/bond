@@ -4,6 +4,7 @@
   "description": "bond-backend",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "devStart": "nodemon server.js"
   },
   "author": "Maxwell Nweke",
