@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { IoMenuOutline } from 'react-icons/io5';
 
 export default function Nav() {
@@ -24,9 +25,11 @@ export default function Nav() {
             <li className='mr-10'>Contact us</li>
             <li className=''>Donates</li>
           </ul>
-          <button className='bg-[#0F71F2] text-white py-3 px-7 rounded-full'>
-            Get Started
-          </button>
+          <Link href='/sign-up'>
+            <button className='bg-[#0F71F2] text-white py-3 px-7 rounded-full'>
+              Get Started
+            </button>
+          </Link>
         </div>
       </nav>
     </>

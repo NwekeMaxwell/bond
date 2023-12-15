@@ -3,6 +3,7 @@ import Cuddle from '../../public/Homepage-assets/cuddle.jpg';
 import Moment from '../../public/Homepage-assets/moment.jpg';
 import Photography from '../../public/Homepage-assets/photography.jpg';
 import { GoChevronRight } from 'react-icons/go';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -20,10 +21,11 @@ export default function Home() {
             Say "hello" to a different messaging experience. An unexpected focus
             on privacy, combined with all of the features you expect.
           </p>
-
-          <button className='bg-[#0F71F2] text-white py-3 px-7 rounded-full mt-10'>
-            Get Started
-          </button>
+          <Link href='/sign-up'>
+            <button className='bg-[#0F71F2] text-white py-3 px-7 rounded-full mt-10'>
+              Get Started
+            </button>
+          </Link>
         </div>
       </section>
       <section className='md:h-[100vh] w-full flex justify-center items-center py-20'>
