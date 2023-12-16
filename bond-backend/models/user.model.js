@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 //lets create a schema
 const userSchema = new mongoose.Schema(
@@ -34,6 +35,24 @@ const userSchema = new mongoose.Schema(
     role: String,
     phone: String,
     About: String,
+    posts: [
+      {
+        type: ObjectId,
+        ref: "Post",
+      },
+    ],
+    likes: [
+      {
+        type: ObjectId,
+        ref: "Likes",
+      },
+    ],
+    replies: [
+      {
+        type: ObjectId,
+        ref: "Comment",
+      },
+    ],
     updatedAt: {
       type: String,
       default: Date.now,
