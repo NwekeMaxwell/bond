@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-// import './globals.css';
+import Admin_Nav from './social-components/Nav';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,8 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
-      <body className={inter.className}>{children}</body>
-    </html>
+    <main className='w-full bg-[#E8E8E6]'>
+      <div className='w-full grid grid-cols-1 md:grid-cols-6 md:max-h-[100vh] md:overflow-hidden'>
+        <Admin_Nav />
+        {children}
+      </div>
+    </main>
   );
 }
