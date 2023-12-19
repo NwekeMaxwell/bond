@@ -17,6 +17,7 @@ export default function RootLayout({
   return (
     <main className='w-full bg-[#E8E8E6]'>
       <div className='w-full grid grid-cols-1 md:grid-cols-6 md:max-h-[100vh] md:overflow-hidden'>
+        {/* <div className='w-full grid grid-cols-1 md:grid-cols-6'> */}
         <Admin_Nav />
         {children}
       </div>

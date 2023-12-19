@@ -11,54 +11,78 @@ import { CiUser } from 'react-icons/ci';
 
 export default function Admin_Nav() {
   return (
-    <section className='hidden md:flex flex-col bg-[#E8E8E6] px-5 h-[100vh] relative'>
-      <Link href={'/'}>
-        <div className='text-lg font-bold text-secondary h-[10vh] flex items-center'>
-          <h1>Bond</h1>
-        </div>
-      </Link>
-      <ul className='w-full '>
-        <Link href='/admin'>
-          <li
-            className={`w-full flex items-center cursor-pointer border border-secondary p-2`}
-          >
-            {/* <MdOutlineSpaceDashboard className='mr-5 text-2xl' /> */}
-            <LiaHomeSolid className='mr-5 text-2xl' />
-            <p>Home</p>
+    <>
+      {/* Small screen */}
+      <section className='w-full md:hidden fixed bottom-0 left-0 py-3 bg-[#E8E8E6]'>
+        <ul className='w-full h-full flex justify-between items-center px-5'>
+          <li className={`cursor-pointer `}>
+            <LiaHomeSolid className='text-2xl' />
           </li>
+          <li className={` cursor-pointer`}>
+            <CgSearch className='text-2xl' />
+          </li>
+          <li className={` cursor-pointer`}>
+            <IoChatbubbleOutline className='text-2xl' />
+          </li>
+          <li className={` cursor-pointer`}>
+            <IoMdNotificationsOutline className='text-2xl' />
+          </li>
+          <li className={` cursor-pointer`}>
+            <CiUser className=' text-2xl' />
+          </li>
+        </ul>
+      </section>
+
+      {/* Large Screen */}
+      <section className='hidden md:flex flex-col bg-[#E8E8E6] px-5 h-[100vh] relative border-r border-black'>
+        <Link href={'/'}>
+          <div className='text-lg font-bold text-secondary h-[10vh] flex items-center'>
+            <h1>Bond</h1>
+          </div>
         </Link>
-        <Link href='/admin/property'>
+        <ul className='w-full '>
+          <Link href='/admin'>
+            <li
+              className={`w-full flex items-center cursor-pointer border border-secondary p-2`}
+            >
+              {/* <MdOutlineSpaceDashboard className='mr-5 text-2xl' /> */}
+              <LiaHomeSolid className='mr-5 text-2xl' />
+              <p>Home</p>
+            </li>
+          </Link>
+          <Link href='/admin/property'>
+            <li
+              className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary`}
+            >
+              <CgSearch className='mr-5 text-2xl' />
+              <p>Search</p>
+            </li>
+          </Link>
           <li
             className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary`}
           >
-            <CgSearch className='mr-5 text-2xl' />
-            <p>Search</p>
+            <IoChatbubbleOutline className='mr-5 text-2xl' />
+            <p>Messages</p>
           </li>
-        </Link>
-        <li
-          className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary`}
-        >
-          <IoChatbubbleOutline className='mr-5 text-2xl' />
-          <p>Messages</p>
-        </li>
-        <li
-          className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary`}
-        >
-          <IoMdNotificationsOutline className='mr-5 text-2xl' />
-          <p>Notificaitons</p>
-        </li>
-        <li
-          className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary`}
-        >
-          <CiUser className='mr-5 text-2xl' />
-          <p>Profile</p>
-        </li>
+          <li
+            className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary`}
+          >
+            <IoMdNotificationsOutline className='mr-5 text-2xl' />
+            <p>Notificaitons</p>
+          </li>
+          <li
+            className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary`}
+          >
+            <CiUser className='mr-5 text-2xl' />
+            <p>Profile</p>
+          </li>
 
-        <li className='absolute bottom-0 w-full flex items-center cursor-pointer my-5 p-2'>
-          <IoLogOutOutline className='mr-5 text-2xl' />
-          <p>Logout</p>
-        </li>
-      </ul>
-    </section>
+          <li className='absolute bottom-0 w-full flex items-center cursor-pointer my-5 p-2'>
+            <IoLogOutOutline className='mr-5 text-2xl' />
+            <p>Logout</p>
+          </li>
+        </ul>
+      </section>
+    </>
   );
 }
