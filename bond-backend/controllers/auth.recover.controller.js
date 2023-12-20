@@ -1,5 +1,5 @@
-const user = require("../services/user.service");
-const { verifyPassword } = require("../services/bcrypt.service");
+const user = require("../services/user.services");
+const { verifyPassword } = require("../services/bcrypt.services");
 const { generateToken } = require("../services/jwt.service");
 
 class RecoverController {
