@@ -53,11 +53,6 @@ const userSchema = new mongoose.Schema(
         ref: "Comment",
       },
     ],
-    updatedAt: {
-      type: String,
-      default: Date.now,
-    },
-    createdAt: String,
     deleted: {
       type: Boolean,
       default: false,

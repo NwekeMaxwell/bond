@@ -25,8 +25,6 @@ const postSchema = new mongoose.Schema(
     image2: String,
     image3: String,
     image4: String,
-    createdAt: String,
-    updatedAt: String,
     deleted: {
       type: Boolean,
       default: false,

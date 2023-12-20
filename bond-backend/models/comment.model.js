@@ -19,8 +19,6 @@ const commentSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "Post",
     },
-    createdAt: String,
-    updatedAt: String,
     deleted: {
       type: Boolean,
       default: false,
