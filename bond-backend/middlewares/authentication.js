@@ -1,7 +1,7 @@
 const { verifyToken } = require("../services/jwt.service");
 const user = require("../services/user.services");
 
-export default async (req, res, next) => {
+const authenticate = async (req, res, next) => {
   // Get token stored in the client header after sign in
   const authHeaders = req.header("Authorization"); //req.headers.authorization
   const token =
@@ -51,3 +51,5 @@ export default async (req, res, next) => {
   req.user = validUser;
   next();
 };
+
+module.exports = authenticate;
