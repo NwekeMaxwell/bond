@@ -11,8 +11,6 @@ const likesSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "User",
     },
-    createdAt: String,
-    updatedAt: String,
     deleted: {
       type: Boolean,
       default: false,

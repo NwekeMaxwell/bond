@@ -3,7 +3,10 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+const router = require("./routes/route.js");
 
+//connect to mongodb
 mongoose.connect(process.env.DATABASE_URL);
 // mongoose.connect(process.env.DATABASE_URL, {
 //   useNewUrlParser: true,
@@ -13,10 +16,17 @@ const db = mongoose.connection;
 db.on("error", (error) => console.error("db error", error));
 db.once("open", () => console.log("Connected to Database"));
 
+// Allows us to access a user's token stored as a cookie
+app.use(cookieParser());
+
+// Allows us to send and receive json files
 app.use(express.json());
 
-const bondusersRouter = require("./routes/users");
-app.use("/users", bondusersRouter);
+// Lets the server listen on all files
+app.use("/api/v1", router);
+
+// const bondusersRouter = require("./routes/users");
+// app.use("/users", bondusersRouter);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Bond app listening on port ${process.env.PORT}`);

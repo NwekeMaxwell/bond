@@ -23,5 +23,4 @@ class UserService extends BaseService {
   }
 }
 
-const user = new UserService(Users);
-module.exports = user;
+module.exports = new UserService(Users);
