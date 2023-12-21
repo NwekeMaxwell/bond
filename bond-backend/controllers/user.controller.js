@@ -5,7 +5,8 @@ class UserController {
   // Updating a user
   async updateUser(req, res) {
     try {
-      const { fullname, username, email, password, newPassword } = req.body;
+      const { firstname, lastname, username, email, password, newPassword } =
+        req.body;
       const id = req.params.id;
       const reqUserId = req.user.id;
 
@@ -31,7 +32,8 @@ class UserController {
 
       // Updates the user based on what was provided
       const data = {};
-      if (fullname) data.fullname = fullname;
+      if (firstname) data.firstname = firstname;
+      if (lastname) data.lastname = lastname;
       if (username) data.username = username;
       if (email) data.email = email;
 
@@ -70,13 +72,13 @@ class UserController {
       const message = {};
 
       // Sends a success message and displays the updated user
-      if (data.fullname) message.fullname = `Updated successfully!`;
+      if (data.firstname) message.firstname = `Updated successfully!`;
+
+      if (data.lastname) message.lastname = `Updated successfully!`;
 
       if (data.username) message.username = `Updated successfully!`;
 
       if (data.email) message.email = `Updated successfully!`;
-
-      if (data.age) message.age = `Updated successfully!`;
 
       if (data.password) message.password = `Changed successfully!`;
 
