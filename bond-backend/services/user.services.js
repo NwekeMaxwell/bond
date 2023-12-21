@@ -7,7 +7,10 @@ class UserService extends BaseService {
   }
 
   async find(filter) {
-    return this.model.findOne(filter, "-posts -replies -password -deleted");
+    return this.model.findOne(
+      filter,
+      "-posts -replies -likes -password -deleted"
+    );
   }
 
   async findWithDetails(filter) {
@@ -15,7 +18,10 @@ class UserService extends BaseService {
   }
 
   async findAll(filter) {
-    return await this.model.find(filter, "-posts -replies -password -deleted");
+    return await this.model.find(
+      filter,
+      "-posts -replies -likes -password -deleted"
+    );
   }
 
   async updateOne(filter, data) {
