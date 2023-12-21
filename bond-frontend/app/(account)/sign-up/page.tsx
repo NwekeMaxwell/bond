@@ -1,9 +1,63 @@
+'use client';
 import join_us from '../../../public/Account-assets/join-us.jpg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaGoogle } from 'react-icons/fa';
+import axios from 'axios';
 
 export default function page() {
+  const bk_url = 'https://bond-hs2g.onrender.com/api/v1/signup';
+
+  const handleUser = async (event) => {
+    console.log('Hi');
+
+    event.preventDefault();
+
+    const new_user = {
+      fullname: 'Nakachukwu',
+      username: 'sitoaustin',
+      email: 'onyedibesixtusna@gmail.com',
+      password: '12345',
+    };
+
+    const header_ = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    async function postUser() {
+      const response = await axios
+        .post(bk_url, new_user, header_)
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error));
+    }
+    postUser();
+  };
+  // async function postData(e: any) {
+  //   e.preventDefault();
+
+  //   // Default options are marked with *
+  //   const response = await fetch(
+  //     'https://bond-hs2g.onrender.com/api/v1/signup',
+  //     {
+  //       method: 'POST', // *GET, POST, PUT, DELETE, etc.
+  //       mode: 'cors', // no-cors, *cors, same-origin
+  //       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+  //       credentials: 'same-origin', // include, *same-origin, omit
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         // 'Content-Type': 'application/x-www-form-urlencoded',
+  //       },
+  //       redirect: 'follow', // manual, *follow, error
+  //       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+  //       body: JSON.stringify(), // body data type must match "Content-Type" header
+  //     }
+  //   );
+  //   console.log(response.json());
+
+  //   return response.json(); // parses JSON response into native JavaScript objects
+  // }
   return (
     <main className='w-full bg-[#D7D5D3]'>
       <section className='w-full grid grid-cols-1 md:grid-cols-2 md:h-[100vh] overflow-hidden relative text-sm'>
@@ -117,7 +171,10 @@ export default function page() {
               </p>
             </div>
             <div className='w-full flex justify-center'>
-              <button className='my-10 bg-[#0F71F2] text-white w-full h-[70px] text-lg font-medium rounded-xl'>
+              <button
+                className='my-10 bg-[#0F71F2] text-white w-full h-[70px] text-lg font-medium rounded-xl'
+                onClick={(event) => handleUser(event)}
+              >
                 Create Account
               </button>
             </div>
