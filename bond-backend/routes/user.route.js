@@ -17,6 +17,7 @@ const authenticate = require("../middlewares/authentication");
 const router = Router();
 
 router.route("/").get(authenticate, getUsers);
+// router.route("/").get([authenticate, 2ndMiddleware], getUsers); //you can add ur middlewares in an array to permit addition of multiple middlewares
 
 router.route("/@:handle").get(authenticate, getUserByHandle);
 
