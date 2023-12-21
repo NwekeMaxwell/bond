@@ -7,15 +7,19 @@ const userSchema = Joi.object({
   username: Joi.string().required().lowercase(),
   email: Joi.string().email().required(),
   password: Joi.string().min(8).max(30).required(),
-  avatar: Joi.string(),
-  role: Joi.string(),
-  phone: Joi.string(),
-  about: Joi.string(),
+  avatar: Joi.string().optional(),
+  role: Joi.string().optional(),
+  phone: Joi.string().optional(),
+  about: Joi.string().optional(),
 });
 
 // Checking the postit schema fields against pre-set conditions
 const postSchema = Joi.object({
   content: Joi.string().required(),
+  image1: Joi.string().optional(),
+  image2: Joi.string().optional(),
+  image3: Joi.string().optional(),
+  image4: Joi.string().optional(),
 });
 
 // Checking the comment schema fields against pre-set conditions
