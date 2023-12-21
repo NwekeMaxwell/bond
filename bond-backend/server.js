@@ -21,9 +21,15 @@ app.use(cookieParser());
 
 // Allows us to send and receive json files
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Lets the server listen on all files
 app.use("/api/v1", router);
+
+// Define a health check route that responds with a 200 status code
+app.get("/api/v1/health", (req, res) => {
+  res.status(200).json("Relax, brov. Everything is alright..");
+});
 
 // const bondusersRouter = require("./routes/users");
 // app.use("/users", bondusersRouter);
