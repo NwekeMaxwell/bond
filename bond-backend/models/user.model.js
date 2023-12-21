@@ -26,7 +26,9 @@ const userSchema = new mongoose.Schema(
       trim: true,
       minlength: 2,
     },
-    avatar: String,
+    avatar: {
+      type: String,
+    },
     email: {
       type: String,
       lowercase: true,
@@ -39,9 +41,15 @@ const userSchema = new mongoose.Schema(
       required: true,
       minlength: 8,
     },
-    role: String,
-    phone: String,
-    about: String,
+    role: {
+      type: String,
+    },
+    phone: {
+      type: String,
+    },
+    about: {
+      type: String,
+    },
     posts: [
       {
         type: ObjectId,
