@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const postSchema = new mongoose.Schema(
+const postsSchema = new mongoose.Schema(
   {
     author: {
       type: ObjectId,
@@ -15,16 +15,22 @@ const postSchema = new mongoose.Schema(
       minlength: 1,
       maxlength: 300,
     },
-    comments: [
-      {
-        type: ObjectId,
-        ref: "Comment",
-      },
-    ],
-    image1: String,
-    image2: String,
-    image3: String,
-    image4: String,
+    comments: {
+      type: ObjectId,
+      ref: "Comment",
+    },
+    image1: {
+      type: String,
+    },
+    image2: {
+      type: String,
+    },
+    image3: {
+      type: String,
+    },
+    image4: {
+      type: String,
+    },
     deleted: {
       type: Boolean,
       default: false,
@@ -33,4 +39,4 @@ const postSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Post", postSchema);
+module.exports = mongoose.model("Post", postsSchema);
