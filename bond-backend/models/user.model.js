@@ -4,7 +4,14 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 //lets create a schema
 const userSchema = new mongoose.Schema(
   {
-    fullname: {
+    firstname: {
+      type: String,
+      lowercase: true,
+      required: true,
+      trim: true,
+      minlength: 3,
+    },
+    lastname: {
       type: String,
       lowercase: true,
       required: true,
@@ -34,7 +41,7 @@ const userSchema = new mongoose.Schema(
     },
     role: String,
     phone: String,
-    About: String,
+    about: String,
     posts: [
       {
         type: ObjectId,
