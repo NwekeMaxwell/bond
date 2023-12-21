@@ -7,6 +7,7 @@ const duration = process.env.JWT_EXPIRES_IN;
 
 //generate token by signing a user details against a secret key when they sign in
 const generateToken = (payload) => {
+  // console.log('check:', payload, secretKey, duration);
   return jwt.sign(payload, secretKey, { expiresIn: duration });
 };
 

@@ -10,11 +10,12 @@ const authenticate = async (req, res, next) => {
       : req.cookies?.token;
 
   // Checks if a token exists and returns a message if none was found
-  if (!token) return sendResponse(res, 403, false, "Login to continue");
-  //  if (!token || token === null) return res.status(400).json({
-  //     message: 'You must be signed in to view content',
-  //     success: false
-  // })
+  // if (!token) return sendResponse(res, 403, false, "Login to continue");
+  if (!token || token === null)
+    return res.status(403).json({
+      message: "Login to continue",
+      success: false,
+    });
 
   // Decode the user token referenced in the request header?cookie to verify its authenticity by checking the token against the secret key. If the token is valid, we should get the user credentials associated with that token.
   //   const decoded = <JwtPayload | string>await tokenHandler.verify(token)
