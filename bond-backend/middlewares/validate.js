@@ -1,6 +1,6 @@
 const {
   userSchema,
-  postitSchema,
+  postSchema,
   commentSchema,
 } = require("../services/joi.service");
 
@@ -28,7 +28,7 @@ const validateUserInputs = (req, res, next) => {
 // Catching required fields errors when creating a user
 const validatePostInputs = (req, res, next) => {
   try {
-    const validateInput = postitSchema.validate(req.body);
+    const validateInput = postSchema.validate(req.body);
 
     if (validateInput.error)
       return res.status(400).json({
@@ -36,7 +36,7 @@ const validatePostInputs = (req, res, next) => {
         errormessage: validateInput.error.details[0].message,
       });
 
-    console.log("Postit input validated successfully");
+    console.log("Post input validated successfully");
     next();
   } catch (err) {
     return res.status(400).json({
