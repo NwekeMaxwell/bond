@@ -5,7 +5,7 @@ const { generateToken } = require("../services/jwt.service");
 
 const signup = async (req, res) => {
   try {
-    const { fullname, username, email, password } = req.body;
+    const { firstname, lastname, username, email, password } = req.body;
 
     // Checks for existing user
     const existingUser = await user.findWithDetails({
@@ -36,7 +36,8 @@ const signup = async (req, res) => {
 
     // Creates a new user
     let newUser = await user.create({
-      fullname,
+      firstname,
+      lastname,
       username,
       email,
       password: safePassword,
@@ -131,7 +132,7 @@ const login = async (req, res) => {
       });
 
     // Stores the returned user's unique id in an object to generate a token for the user
-    const token = generateToken({ id: foundUser._id });
+    const token = generateToken({ id: foundUser._id, test: "heyyy" });
 
     // This saves the token as a cookie for the duration of its validity just to simulate how the request header works for the purpose of testing.
     res.cookie("token", token, { httpOnly: true });
