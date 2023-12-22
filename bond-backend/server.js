@@ -5,6 +5,7 @@ const app = express();
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const router = require("./routes/route.js");
+const cors = require("cors");
 
 //connect to mongodb
 mongoose.connect(process.env.DATABASE_URL);
@@ -22,7 +23,7 @@ app.use(cookieParser());
 // Allows us to send and receive json files
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(cors());
 // Lets the server listen on all files
 app.use("/api/v1", router);
 
