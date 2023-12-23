@@ -190,7 +190,7 @@ class PostController {
   async getUserPosts(req, res) {
     try {
       const { userid } = req.params;
-      console.log("requester", userid);
+      // console.log("requester", userid);
       const existingUser = await user.find({ _id: userid });
 
       if (!existingUser)
@@ -199,10 +199,10 @@ class PostController {
           success: false,
         });
 
-      const posts = await posts.findAll({ author: userid, deleted: false });
+      const postsList = await posts.findAll({ author: userid, deleted: false });
 
       // Sends a message if no posts exist
-      if (!posts)
+      if (!postsList)
         return res.status(404).json({
           message: `Oops, it seems like this user has no posts to display`,
           success: false,
@@ -212,7 +212,7 @@ class PostController {
       return res.status(200).json({
         message: `Posts fetched successfully!`,
         success: true,
-        data: posts,
+        data: postsList,
       });
     } catch (err) {
       return res.status(500).json({
@@ -234,7 +234,7 @@ class PostController {
           success: false,
         });
 
-      const existingPost = await postit.find({
+      const existingPost = await posts.find({
         _id: id,
         author: userid,
         deleted: false,
@@ -243,13 +243,13 @@ class PostController {
       // Sends a message if the specified postit does not exist
       if (!existingPost)
         return res.status(404).json({
-          message: `Oops, we couldn't find this postit as it does not exist or may have been deleted by its author!`,
+          message: `Oops, we couldn't find this post as it does not exist or may have been deleted by its author!`,
           success: false,
         });
 
       // Sends a success message and displays postit
       return res.status(200).json({
-        message: `Postit fetched successfully!`,
+        message: `Post fetched successfully!`,
         success: true,
         data: existingPost,
       });
@@ -273,7 +273,7 @@ class PostController {
           message: `Oops, it seems like this user does not exist`,
         });
 
-      const existingPosts = await postit.findAll({
+      const existingPosts = await posts.findAll({
         author: existingUser._id,
         deleted: false,
       });
@@ -281,13 +281,13 @@ class PostController {
       // Sends a message if the specified postit does not exist
       if (!existingPosts)
         return res.status(404).json({
-          message: `Oops, it seems like this user has no postits to display`,
+          message: `Oops, it seems like this user has no posts to display`,
           success: false,
         });
 
-      // Sends a success message and displays postit
+      // Sends a success message and displays post
       return res.status(200).json({
-        message: `Postits fetched successfully!`,
+        message: `Posts fetched successfully!`,
         success: true,
         data: existingPosts,
       });
