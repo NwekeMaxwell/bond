@@ -13,7 +13,19 @@ const generateToken = (payload) => {
 
 // Verifies the authenticity of a user by checking the validity of the user's token against the secret key
 const verifyToken = (payload) => {
-  return jwt.verify(payload, secretKey);
+  try {
+    const decoded = jwt.verify(payload, secretKey);
+    return {
+      isValid : true,
+      payload : decoded
+    };
+  } catch (error) {
+    return {
+      isValid: false,
+      errorName: error.name,
+      errorMessage: error.message,
+    };
+  }
 };
 
 module.exports = { generateToken, verifyToken };
