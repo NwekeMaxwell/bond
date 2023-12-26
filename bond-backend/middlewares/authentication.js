@@ -42,7 +42,7 @@ const authenticate = async (req, res, next) => {
 
   // The secretkey recognises the token and gives the payload associated with it for the database to be checked to see if a user exists with the id require () the payload. A payload is a user's unique sign in credentials.
   //   const user = await userService.getOne({ _id: (decoded as JwtPayload)._id})
-  const validUser = await user.find({ _id: payload.id });
+  const validUser = await user.find({ _id: payload.payload.id });
   // If no user is found with the payload (credentials), authentication fails.
   //   if (!user) return sendResponse(res, 404, false, 'User not found')
   if (!validUser) {
