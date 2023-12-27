@@ -11,7 +11,7 @@ class CommentService extends BaseService {
         .sort({createdAt: -1})
         .populate({path: 'author', select: 'username'})
         .populate({
-            path: 'posts',
+            path: 'parentpost',
             select: 'content',
             match: {deleted: false},
             populate: {
@@ -28,7 +28,7 @@ class CommentService extends BaseService {
         .sort({createdAt: -1})
         .populate({path: 'author', select: 'username'})
         .populate({
-            path: 'posts',
+            path: 'parentpost',
             select: 'content',
             match: {deleted: false},
             populate: {
