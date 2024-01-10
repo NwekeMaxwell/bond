@@ -20,7 +20,16 @@ const authenticate = async (req, res, next) => {
   // Decode the user token referenced in the request header?cookie to verify its authenticity by checking the token against the secret key. If the token is valid, we should get the user credentials associated with that token.
   //   const decoded = <JwtPayload | string>await tokenHandler.verify(token)
   const payload = verifyToken(token);
-
+  if (!payload.isValid) {
+    return res.status(401).json({
+      message:
+        payload.errorName === "TokenExpiredError"
+          ? "Token expired, please sign in again"
+          : payload.errorName,
+      info: payload.errorMessage,
+      success: false,
+    });
+  }
   // If secret key doesn't recognise the token, the user isn't authenticated and asked to try signing in again to get a new token
   //   if (decoded === 'expired') return sendResponse(res, 403, false, 'Session expired. Sign in again to continue.')
   //     if (decoded === 'invalid') return sendResponse(res, 401, false, 'Invalid token.')
@@ -33,7 +42,7 @@ const authenticate = async (req, res, next) => {
 
   // The secretkey recognises the token and gives the payload associated with it for the database to be checked to see if a user exists with the id require () the payload. A payload is a user's unique sign in credentials.
   //   const user = await userService.getOne({ _id: (decoded as JwtPayload)._id})
-  const validUser = await user.find({ _id: payload.id });
+  const validUser = await user.find({ _id: payload.payload.id });
   // If no user is found with the payload (credentials), authentication fails.
   //   if (!user) return sendResponse(res, 404, false, 'User not found')
   if (!validUser) {
