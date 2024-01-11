@@ -4,60 +4,47 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaGoogle } from 'react-icons/fa';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { MouseEvent, useState } from 'react';
+import { json } from 'stream/consumers';
 
 export default function page() {
-  const bk_url = 'https://bond-hs2g.onrender.com/api/v1/signup';
+  const router = useRouter();
+  const [user_form_data, set_user_form_data] = useState({
+    firstname: '',
+    lastname: '',
+    username: '',
+    email: '',
+    password: '',
+  });
 
-  const handleUser = async (event) => {
-    console.log('Hi');
+  const bk_url = 'https://bond-hs2g.onrender.com/api/v1/auth/signup';
 
+  const handleUser = async (event: any) => {
+    // confirming the data
+    console.log(user_form_data);
     event.preventDefault();
-
-    const new_user = {
-      fullname: 'Nakachukwu',
-      username: 'sitoaustin',
-      email: 'onyedibesixtusna@gmail.com',
-      password: '12345',
-    };
-
-    const header_ = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
     async function postUser() {
-      const response = await axios
-        .post(bk_url, new_user, header_)
-        .then((response) => console.log(response))
-        .catch((error) => console.log(error));
+      try {
+        const response = await axios
+          .post(bk_url, user_form_data)
+          .then((response) => {
+            console.log(response.data);
+            if (response.status == 200) {
+              localStorage.setItem('bond_user', JSON.stringify(response.data));
+              router.push('/social');
+            }
+
+            return response;
+          })
+          .catch((error) => console.log(error));
+      } catch (error) {
+        console.log(error);
+      }
     }
     postUser();
   };
-  // async function postData(e: any) {
-  //   e.preventDefault();
 
-  //   // Default options are marked with *
-  //   const response = await fetch(
-  //     'https://bond-hs2g.onrender.com/api/v1/signup',
-  //     {
-  //       method: 'POST', // *GET, POST, PUT, DELETE, etc.
-  //       mode: 'cors', // no-cors, *cors, same-origin
-  //       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-  //       credentials: 'same-origin', // include, *same-origin, omit
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         // 'Content-Type': 'application/x-www-form-urlencoded',
-  //       },
-  //       redirect: 'follow', // manual, *follow, error
-  //       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  //       body: JSON.stringify(), // body data type must match "Content-Type" header
-  //     }
-  //   );
-  //   console.log(response.json());
-
-  //   return response.json(); // parses JSON response into native JavaScript objects
-  // }
   return (
     <main className='w-full bg-[#D7D5D3]'>
       <section className='w-full grid grid-cols-1 md:grid-cols-2 md:h-[100vh] overflow-hidden relative text-sm'>
@@ -86,6 +73,12 @@ export default function page() {
                   id='firstname'
                   className='bg-[#D7D5D3] border-b border-black focus:outline-none px-5 pb-1'
                   placeholder='Enter your firstname'
+                  onChange={(e) =>
+                    set_user_form_data((userdata) => ({
+                      ...userdata,
+                      firstname: e.target.value,
+                    }))
+                  }
                 />
               </div>
               {/* repeat password */}
@@ -98,6 +91,12 @@ export default function page() {
                   id='lastname'
                   className='bg-[#D7D5D3] border-b border-black focus:outline-none px-5 pb-1'
                   placeholder='Enter your lastname'
+                  onChange={(e) =>
+                    set_user_form_data((userdata) => ({
+                      ...userdata,
+                      lastname: e.target.value,
+                    }))
+                  }
                 />
               </div>
             </div>
@@ -111,6 +110,12 @@ export default function page() {
                 id='username'
                 className='bg-[#D7D5D3] border-b border-black focus:outline-none px-5 pb-1'
                 placeholder='Enter your username'
+                onChange={(e) =>
+                  set_user_form_data((userdata) => ({
+                    ...userdata,
+                    username: e.target.value,
+                  }))
+                }
               />
             </div>
             {/* Username */}
@@ -123,6 +128,12 @@ export default function page() {
                 id='email'
                 className='bg-[#D7D5D3] border-b border-black focus:outline-none px-5 pb-1'
                 placeholder='Enter your email'
+                onChange={(e) =>
+                  set_user_form_data((userdata) => ({
+                    ...userdata,
+                    email: e.target.value,
+                  }))
+                }
               />
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-5 mt-5'>
@@ -136,6 +147,12 @@ export default function page() {
                   id='password'
                   className='bg-[#D7D5D3] border-b border-black focus:outline-none px-5 pb-1'
                   placeholder='Enter your password'
+                  onChange={(e) =>
+                    set_user_form_data((userdata) => ({
+                      ...userdata,
+                      password: e.target.value,
+                    }))
+                  }
                 />
               </div>
               {/* repeat password */}
