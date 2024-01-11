@@ -1,5 +1,5 @@
-import LargeScreen_panelDash from './LargeScreen_panelDash';
-import SmallScreen_panelDash from './SmallScreen_panelDash';
+import LargeScreen_panelDash from './Profile_LargeScreen_panelDash';
+import SmallScreen_panelDash from './Profile_SmallScreen_panelDash';
 
 export default function Right_panel_dashboard() {
   return (
@@ -9,3 +9,4 @@ export default function Right_panel_dashboard() {
     </>
   );
 }
+ 

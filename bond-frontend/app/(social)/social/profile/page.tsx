@@ -1,8 +1,5 @@
 'use client';
-
-import { notFound, redirect } from 'next/navigation';
-// import Right_panel_dashboard from '../../social-components/Right-panel-dashboard';
-import Right_panel_dashboard from '../social-components/Right-panel-dashboard';
+import Right_panel_dashboard from "../social-components/Profile_Right-panel-dashboard";
 
 export default function page() {
   return (

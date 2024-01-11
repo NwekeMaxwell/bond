@@ -5,8 +5,7 @@ import Link from 'next/link';
 import { FaGoogle } from 'react-icons/fa';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { MouseEvent, useState } from 'react';
-import { json } from 'stream/consumers';
+import { useState } from 'react';
 
 export default function page() {
   const router = useRouter();
