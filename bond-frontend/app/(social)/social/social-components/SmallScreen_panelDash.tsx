@@ -31,7 +31,7 @@ export default function SmallScreen_panelDash() {
     }
     fetchdata_fromlocalstorage();
   }, []);
-  console.log(current_user);
+  // console.log(current_user);
   return (
     <>
       <section className='w-full max-h-[100vh] md:hidden '>

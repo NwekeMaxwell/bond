@@ -26,7 +26,7 @@ export default function Admin_Nav() {
           .then((response) => {
             console.log(response.data);
             if (response.status == 200) {
-              localStorage.setItem('bond_user', JSON.stringify(response.data));
+              localStorage.removeItem('bond_user');
               router.push('/sign-in');
             }
 

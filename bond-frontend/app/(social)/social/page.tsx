@@ -22,14 +22,19 @@ export default function page() {
       const data = localStorage.getItem('bond_user');
       if (data) {
         set_current_user(JSON.parse(data).user);
+      } else {
+        router.push('/sign-up');
       }
+      console.log(data);
     }
     fetchdata_fromlocalstorage();
   }, []);
 
-  // if (!current_user) {
-  //   router.push('/sign-up');
-  // }
+  // useEffect(() => {
+  //   if (current_user === null) {
+  //     router.push('/sign-up');
+  //   }
+  // }, []);
   return (
     <section className='w-full bg-primary md:col-span-5 max-h-[100vh] md:grid md:grid-rows-[(10vh_1fr)]'>
       {/* <section className='w-full bg-primary md:col-span-5 md:grid md:grid-rows-[(10vh_1fr)]'> */}
