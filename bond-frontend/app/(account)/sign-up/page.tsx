@@ -1,9 +1,50 @@
+'use client';
 import join_us from '../../../public/Account-assets/join-us.jpg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaGoogle } from 'react-icons/fa';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { MouseEvent, useState } from 'react';
+import { json } from 'stream/consumers';
 
 export default function page() {
+  const router = useRouter();
+  const [user_form_data, set_user_form_data] = useState({
+    firstname: '',
+    lastname: '',
+    username: '',
+    email: '',
+    password: '',
+  });
+
+  const bk_url = 'https://bond-hs2g.onrender.com/api/v1/auth/signup';
+
+  const handleUser = async (event: any) => {
+    // confirming the data
+    console.log(user_form_data);
+    event.preventDefault();
+    async function postUser() {
+      try {
+        const response = await axios
+          .post(bk_url, user_form_data)
+          .then((response) => {
+            console.log(response.data);
+            if (response.status == 200) {
+              localStorage.setItem('bond_user', JSON.stringify(response.data));
+              router.push('/social');
+            }
+
+            return response;
+          })
+          .catch((error) => console.log(error));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    postUser();
+  };
+
   return (
     <main className='w-full bg-[#D7D5D3]'>
       <section className='w-full grid grid-cols-1 md:grid-cols-2 md:h-[100vh] overflow-hidden relative text-sm'>
@@ -32,6 +73,12 @@ export default function page() {
                   id='firstname'
                   className='bg-[#D7D5D3] border-b border-black focus:outline-none px-5 pb-1'
                   placeholder='Enter your firstname'
+                  onChange={(e) =>
+                    set_user_form_data((userdata) => ({
+                      ...userdata,
+                      firstname: e.target.value,
+                    }))
+                  }
                 />
               </div>
               {/* repeat password */}
@@ -44,6 +91,12 @@ export default function page() {
                   id='lastname'
                   className='bg-[#D7D5D3] border-b border-black focus:outline-none px-5 pb-1'
                   placeholder='Enter your lastname'
+                  onChange={(e) =>
+                    set_user_form_data((userdata) => ({
+                      ...userdata,
+                      lastname: e.target.value,
+                    }))
+                  }
                 />
               </div>
             </div>
@@ -57,6 +110,12 @@ export default function page() {
                 id='username'
                 className='bg-[#D7D5D3] border-b border-black focus:outline-none px-5 pb-1'
                 placeholder='Enter your username'
+                onChange={(e) =>
+                  set_user_form_data((userdata) => ({
+                    ...userdata,
+                    username: e.target.value,
+                  }))
+                }
               />
             </div>
             {/* Username */}
@@ -69,6 +128,12 @@ export default function page() {
                 id='email'
                 className='bg-[#D7D5D3] border-b border-black focus:outline-none px-5 pb-1'
                 placeholder='Enter your email'
+                onChange={(e) =>
+                  set_user_form_data((userdata) => ({
+                    ...userdata,
+                    email: e.target.value,
+                  }))
+                }
               />
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-5 mt-5'>
@@ -82,6 +147,12 @@ export default function page() {
                   id='password'
                   className='bg-[#D7D5D3] border-b border-black focus:outline-none px-5 pb-1'
                   placeholder='Enter your password'
+                  onChange={(e) =>
+                    set_user_form_data((userdata) => ({
+                      ...userdata,
+                      password: e.target.value,
+                    }))
+                  }
                 />
               </div>
               {/* repeat password */}
@@ -117,7 +188,10 @@ export default function page() {
               </p>
             </div>
             <div className='w-full flex justify-center'>
-              <button className='my-10 bg-[#0F71F2] text-white w-full h-[70px] text-lg font-medium rounded-xl'>
+              <button
+                className='my-10 bg-[#0F71F2] text-white w-full h-[70px] text-lg font-medium rounded-xl'
+                onClick={(event) => handleUser(event)}
+              >
                 Create Account
               </button>
             </div>

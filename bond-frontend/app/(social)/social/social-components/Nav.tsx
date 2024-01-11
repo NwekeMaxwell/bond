@@ -8,8 +8,37 @@ import { CgSearch } from 'react-icons/cg';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { CiUser } from 'react-icons/ci';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function Admin_Nav() {
+  const router = useRouter();
+
+  const bk_url = 'https://bond-hs2g.onrender.com/api/v1/auth/logout';
+
+  const handleUserLogout = async (event: any) => {
+    // confirming the data
+    event.preventDefault();
+    async function postUser() {
+      try {
+        const response = await axios
+          .post(bk_url)
+          .then((response) => {
+            console.log(response.data);
+            if (response.status == 200) {
+              localStorage.removeItem('bond_user');
+              router.push('/sign-in');
+            }
+
+            return response;
+          })
+          .catch((error) => console.log(error));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    postUser();
+  };
   return (
     <>
       {/* Small screen */}
@@ -77,7 +106,10 @@ export default function Admin_Nav() {
             <p>Profile</p>
           </li>
 
-          <li className='absolute bottom-0 w-full flex items-center cursor-pointer my-5 p-2'>
+          <li
+            className='absolute bottom-0 w-full flex items-center cursor-pointer my-5 p-2'
+            onClick={handleUserLogout}
+          >
             <IoLogOutOutline className='mr-5 text-2xl' />
             <p>Logout</p>
           </li>
