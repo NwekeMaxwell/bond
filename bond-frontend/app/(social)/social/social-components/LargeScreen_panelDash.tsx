@@ -7,8 +7,32 @@ import User_pic3 from '../Social-assets/pic3.jpg';
 import User_pic4 from '../Social-assets/pic4.jpg';
 import User_pic5 from '../Social-assets/pic5.jpg';
 import User_pic6 from '../Social-assets/pic6.jpg';
+import { useEffect, useState } from 'react';
 
 export default function LargeScreen_panelDash() {
+  type UserData = {
+    createdAt: string;
+    email: string;
+    firstname: string;
+    lastname: string;
+    updatedAt: string;
+    username: string;
+    _v: number;
+    _id: string;
+  };
+  const [current_user, set_current_user] = useState<UserData | null>(null);
+
+  useEffect(() => {
+    function fetchdata_fromlocalstorage() {
+      const data = localStorage.getItem('bond_user');
+      if (data) {
+        set_current_user(JSON.parse(data).user);
+      }
+    }
+    fetchdata_fromlocalstorage();
+  }, []);
+  // console.log(current_user);
+
   return (
     <section
       className={`col-span-5 max-h-[100vh] hidden md:grid bg-[#E8E8E6] `}
@@ -22,7 +46,9 @@ export default function LargeScreen_panelDash() {
             </div>
           </div>
           <div className='col-span-1'>
-            <p className='mb-3 text-gray-500'>@sitoaustin</p>
+            <p className='mb-3 text-gray-500'>
+              {current_user && `@${current_user.username}`}
+            </p>
             <p>
               Software Engineer | Tech Enthusiast 🚀
               <span className='block'>
