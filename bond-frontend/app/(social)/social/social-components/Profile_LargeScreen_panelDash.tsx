@@ -31,7 +31,6 @@ export default function LargeScreen_panelDash() {
     }
     fetchdata_fromlocalstorage();
   }, []);
-  // console.log(current_user);
 
   return (
     <section

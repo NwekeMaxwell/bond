@@ -10,8 +10,14 @@ import { IoMdNotificationsOutline } from 'react-icons/io';
 import { CiUser } from 'react-icons/ci';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { CiCirclePlus } from 'react-icons/ci';
+import { useState } from 'react';
+import CreatePost from './CreatePost';
 
 export default function Admin_Nav() {
+  const [createPost, set_CreatePost] = useState(false);
+  const pathname = usePathname();
   const router = useRouter();
 
   const bk_url = 'https://bond-hs2g.onrender.com/api/v1/auth/logout';
@@ -70,16 +76,17 @@ export default function Admin_Nav() {
           </div>
         </Link>
         <ul className='w-full '>
-          <Link href='/admin'>
+          <Link href='/social'>
             <li
-              className={`w-full flex items-center cursor-pointer border border-secondary p-2`}
+              className={`w-full flex items-center cursor-pointer border border-secondary p-2 ${
+                pathname === '/social' && 'border-b border-black'
+              }`}
             >
-              {/* <MdOutlineSpaceDashboard className='mr-5 text-2xl' /> */}
               <LiaHomeSolid className='mr-5 text-2xl' />
               <p>Home</p>
             </li>
           </Link>
-          <Link href='/admin/property'>
+          <Link href='/social'>
             <li
               className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary`}
             >
@@ -100,11 +107,24 @@ export default function Admin_Nav() {
             <p>Notificaitons</p>
           </li>
           <li
-            className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary`}
+            className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary ${
+              createPost && 'border-b border-black'
+            }`}
+            onClick={() => set_CreatePost(!createPost)}
           >
-            <CiUser className='mr-5 text-2xl' />
-            <p>Profile</p>
+            <CiCirclePlus className='mr-5 text-2xl' />
+            <p>Create</p>
           </li>
+          <Link href='/social/profile'>
+            <li
+              className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary ${
+                pathname === '/social/profile' && 'border-b border-black'
+              }`}
+            >
+              <CiUser className='mr-5 text-2xl' />
+              <p>Profile</p>
+            </li>
+          </Link>
 
           <li
             className='absolute bottom-0 w-full flex items-center cursor-pointer my-5 p-2'
@@ -115,6 +135,7 @@ export default function Admin_Nav() {
           </li>
         </ul>
       </section>
+      {createPost && <CreatePost />}
     </>
   );
 }
