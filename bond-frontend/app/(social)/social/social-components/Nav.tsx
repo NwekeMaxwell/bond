@@ -16,7 +16,7 @@ import { useState } from 'react';
 import CreatePost from './CreatePost';
 
 export default function Admin_Nav() {
-  const [createPost, set_CreatePost] = useState(false);
+  const [createPost, set_CreatePost] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -135,7 +135,9 @@ export default function Admin_Nav() {
           </li>
         </ul>
       </section>
-      {createPost && <CreatePost />}
+      {createPost && (
+        <CreatePost createPost={createPost} setCreatePost={set_CreatePost} />
+      )}
     </>
   );
 }

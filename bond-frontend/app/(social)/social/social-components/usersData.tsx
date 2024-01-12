@@ -3,7 +3,9 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { CiUser } from 'react-icons/ci';
-import User_pic1 from '../Social-assets/pic1.jpg';
+import { CiHeart } from 'react-icons/ci';
+import { BsChat } from 'react-icons/bs';
+import CreateComment from './CreateComment';
 
 export default function UsersData() {
   type UsersData = {
@@ -19,6 +21,7 @@ export default function UsersData() {
     _id: string;
   };
   const [users_data, setUsers_data] = useState<[UsersData] | null>(null);
+  const [create_comment, setCreate_comment] = useState<boolean>(false);
 
   useEffect(() => {
     function fetchdata_fromlocalstorage() {
@@ -38,9 +41,6 @@ export default function UsersData() {
             },
           })
           .then((response) => {
-            // console.log('it ran');
-
-            // console.log(response.data.data);
             setUsers_data(response.data.data);
           });
       } catch (err) {
@@ -63,7 +63,7 @@ export default function UsersData() {
           <div className='rounded-full h-[40px] w-[40px] border border-black flex justify-center items-center'>
             <CiUser className='text-5xl p-2' />
           </div>
-          <div className='pl-5'>
+          <div className='pl-5 w-full'>
             <div className='flex items-center'>
               <h4 className='font-bold mr-1'>Sixtus Onyedibe</h4>
               <p className='text-sm'>@{user.author.username}</p>
@@ -82,6 +82,23 @@ export default function UsersData() {
                 />
               </div>
             </div>
+            <div className='w-full flex px-3 py-5 items-center'>
+              <CiHeart className='mr-5 text-[32px] cursor-pointer' />
+              <div
+                className=''
+                onClick={() => setCreate_comment(!create_comment)}
+              >
+                <BsChat className='mr-5 text-2xl cursor-pointer' />
+              </div>
+            </div>
+            {create_comment && (
+              <CreateComment
+                create_comment={create_comment}
+                setCreate_comment={setCreate_comment}
+                user_image={user.image1}
+                post_id={user._id}
+              />
+            )}
           </div>
         </div>
       ))}
