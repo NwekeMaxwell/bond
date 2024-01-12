@@ -3,7 +3,6 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { CiUser } from 'react-icons/ci';
-import User_pic1 from '../Social-assets/pic1.jpg';
 import { CiHeart } from 'react-icons/ci';
 import { BsChat } from 'react-icons/bs';
 import CreateComment from './CreateComment';
@@ -61,7 +60,6 @@ export default function UsersData() {
       <h1>Users data</h1>
       {users_data?.map((user, index) => (
         <div className='w-full flex p-5 border-t border-t-black' key={index}>
-          {/* <div className='w-full flex p-5 border-t border-t-black'> */}
           <div className='rounded-full h-[40px] w-[40px] border border-black flex justify-center items-center'>
             <CiUser className='text-5xl p-2' />
           </div>
