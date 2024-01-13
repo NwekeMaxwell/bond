@@ -42,6 +42,7 @@ export default function CreateComment({
   const [editComment, setEditComment] = useState(false);
   const [commentContent, setCommentContent] = useState('');
   const [commentId, setCommentId] = useState('');
+  const [loggedInUserId, setLoggedInUserId] = useState('');
 
   useEffect(() => {
     async function getComments() {
@@ -49,6 +50,7 @@ export default function CreateComment({
       let current_user_token;
       if (data) {
         current_user_token = JSON.parse(data).token;
+        setLoggedInUserId(JSON.parse(data).user._id);
       }
       const bk_url = `https://bond-hs2g.onrender.com/api/v1/comment/posts/${post_id}/comments`;
 
@@ -216,7 +218,8 @@ export default function CreateComment({
                                 <p>post id {post_author_id}</p>
                               </div> */}
                               {current_comment?.author._id ===
-                                post_author_id && (
+                                // post_author_id && (
+                                loggedInUserId && (
                                 <>
                                   <div
                                     className='cursor-pointer mr-5'
