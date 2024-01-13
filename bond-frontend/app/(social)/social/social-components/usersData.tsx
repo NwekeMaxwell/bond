@@ -22,6 +22,9 @@ export default function UsersData() {
   };
   const [users_data, setUsers_data] = useState<[UsersData] | null>(null);
   const [create_comment, setCreate_comment] = useState<boolean>(false);
+  const [currentUserID, setCurrentUserId] = useState('');
+  const [currentUserImg, setCurrentUserImg] = useState('');
+  const [postAuthorID, setPostAuthorID] = useState('');
 
   useEffect(() => {
     function fetchdata_fromlocalstorage() {
@@ -33,7 +36,7 @@ export default function UsersData() {
     async function getUsersPosts(current_user_token: string) {
       const bk_url = 'https://bond-hs2g.onrender.com/api/v1/posts';
       try {
-        const response = await axios
+        await axios
           .get(bk_url, {
             headers: {
               Authorization: `Bearer ${current_user_token}`,
@@ -50,31 +53,39 @@ export default function UsersData() {
     getUsersPosts(fetchdata_fromlocalstorage());
   }, []);
 
-  function userDataModel() {
-    if (users_data !== null) {
-      return;
-    }
+  console.log(users_data);
+
+  function handleCreateComment(
+    postId: string,
+    postImg: string,
+    postAuthorId: string
+  ) {
+    setCurrentUserId(postId);
+    setCurrentUserImg(postImg);
+    setPostAuthorID(postAuthorId);
+    setCreate_comment(!create_comment);
   }
   return (
-    <>
-      <h1>Users data</h1>
-      {users_data?.map((user, index) => (
+    <div className='pt-5'>
+      {/* <h1 className='text-center my-10 font-bold text-5xl'>Bond</h1> */}
+
+      {users_data?.map((post, index) => (
         <div className='w-full flex p-5 border-t border-t-black' key={index}>
           <div className='rounded-full h-[40px] w-[40px] border border-black flex justify-center items-center'>
             <CiUser className='text-5xl p-2' />
           </div>
           <div className='pl-5 w-full'>
             <div className='flex items-center'>
-              <h4 className='font-bold mr-1'>Sixtus Onyedibe</h4>
-              <p className='text-sm'>@{user.author.username}</p>
+              {/* <h4 className='font-bold mr-1'>Sixtus Onyedibe</h4> */}
+              <p className='text-sm font-bold'>@{post.author.username}</p>
             </div>
             <div className='w-full mt-2'>
-              <p className='text-sm'>{user.content}</p>
+              <p className='text-sm'>{post.content}</p>
             </div>
             <div className='mt-5 w-full rounded-2xl overflow-hidden'>
               <div className='w-full h-full aspect-square overflow-hidden'>
                 <Image
-                  src={user.image1}
+                  src={post.image1}
                   alt='user profile picture'
                   className='h-full object-cover w-full'
                   width={500}
@@ -86,7 +97,9 @@ export default function UsersData() {
               <CiHeart className='mr-5 text-[32px] cursor-pointer' />
               <div
                 className=''
-                onClick={() => setCreate_comment(!create_comment)}
+                onClick={() =>
+                  handleCreateComment(post._id, post.image1, post.author._id)
+                }
               >
                 <BsChat className='mr-5 text-2xl cursor-pointer' />
               </div>
@@ -95,13 +108,14 @@ export default function UsersData() {
               <CreateComment
                 create_comment={create_comment}
                 setCreate_comment={setCreate_comment}
-                user_image={user.image1}
-                post_id={user._id}
+                user_image={currentUserImg}
+                post_id={currentUserID}
+                post_author_id={postAuthorID}
               />
             )}
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 }

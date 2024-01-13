@@ -2,6 +2,8 @@ import axios from 'axios';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+// Cloudinary
+// import { CldUploadWidget } from 'next-cloudinary';
 
 type CreatingPost = {
   createPost: boolean;
@@ -19,6 +21,7 @@ export default function CreatePost({
   const [userPost, setUserPost] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState('');
+  const [cloudinaryImgUrl, setCloudinaryImgUrl] = useState('');
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -38,7 +41,7 @@ export default function CreatePost({
     }
   };
 
-  function handle_postData(e: any) {
+  async function handle_postData(e: any) {
     e.preventDefault();
     const data = localStorage.getItem('bond_user');
     let current_user_token;
@@ -50,10 +53,42 @@ export default function CreatePost({
     if (selectedFile) {
       formData.append('image', selectedFile);
     }
+    // Cloudinary
+    const CLOUD_NAME = 'onyedibesixtus';
+    const UPLOAD_PRESET = 'Bond_social_media_app';
+    const uploadImage = async () => {
+      if (!selectedFile) return;
+
+      const formData = new FormData();
+
+      formData.append('file', selectedFile);
+      formData.append('upload_preset', UPLOAD_PRESET);
+
+      try {
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+          {
+            method: 'POST',
+            body: formData,
+          }
+        );
+
+        const data = await res.json();
+
+        const imageUrl = data['secure_url'];
+        setCloudinaryImgUrl(imageUrl);
+        console.log(imageUrl);
+
+        return imageUrl;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    uploadImage();
 
     const userPostDatat = {
       content: userPost,
-      image1: `${formData}`,
+      image1: await uploadImage(),
     };
 
     async function makePost(current_user_token: string) {
@@ -70,15 +105,9 @@ export default function CreatePost({
       }
     }
     makePost(current_user_token);
-  }
-
-  function handleCloseCreatePost(e: any) {
     setCreatePost(!createPost);
-    e.stopPropagation();
   }
 
-  const route = useRouter();
-  const pathname = usePathname();
   const exitDetailHandler = (e: any) => {
     const element = e.target;
     console.log(element.classList);
@@ -88,6 +117,8 @@ export default function CreatePost({
       setCreatePost(!createPost);
     }
   };
+
+  // Cloudinary
 
   return (
     <>
@@ -100,7 +131,7 @@ export default function CreatePost({
           <div className='w-full pt-5 mb-5 border-b border-b-black'>
             <h4 className='text-center '>Create new post</h4>
           </div>
-          <form className='w-full px-5'>
+          <form className='w-full px-5' onSubmit={(e) => e.preventDefault()}>
             <textarea
               className='h-[100px] w-full resize-none bg-inherit border border-black p-3'
               placeholder="What's on your mind?"
