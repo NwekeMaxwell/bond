@@ -1,6 +1,4 @@
 'use client';
-import { MdOutlineSpaceDashboard } from 'react-icons/md';
-import { AiOutlineUsergroupDelete } from 'react-icons/ai';
 import { IoLogOutOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { LiaHomeSolid } from 'react-icons/lia';
@@ -86,14 +84,12 @@ export default function Admin_Nav() {
               <p>Home</p>
             </li>
           </Link>
-          <Link href='/social'>
-            <li
-              className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary`}
-            >
-              <CgSearch className='mr-5 text-2xl' />
-              <p>Search</p>
-            </li>
-          </Link>
+          <li
+            className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary`}
+          >
+            <CgSearch className='mr-5 text-2xl' />
+            <p>Search</p>
+          </li>
           <li
             className={`w-full flex items-center cursor-pointer mt-5 p-2 border border-secondary`}
           >

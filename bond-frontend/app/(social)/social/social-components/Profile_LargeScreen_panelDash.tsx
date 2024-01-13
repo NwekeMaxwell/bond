@@ -1,36 +1,63 @@
 'use client';
 import Image from 'next/image';
-import User_pic from '../Social-assets/result.png';
-import User_pic1 from '../Social-assets/pic1.jpg';
-import User_pic2 from '../Social-assets/pic2.jpg';
-import User_pic3 from '../Social-assets/pic3.jpg';
-import User_pic4 from '../Social-assets/pic4.jpg';
-import User_pic5 from '../Social-assets/pic5.jpg';
-import User_pic6 from '../Social-assets/pic6.jpg';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { CiUser } from 'react-icons/ci';
 
 export default function LargeScreen_panelDash() {
   type UserData = {
-    createdAt: string;
-    email: string;
-    firstname: string;
-    lastname: string;
-    updatedAt: string;
-    username: string;
-    _v: number;
+    user: {
+      username: string;
+      _id: string;
+      firstname: string;
+      lastname: string;
+    };
+  };
+
+  type UsersPost = {
     _id: string;
+    author: {
+      username: string;
+      _id: string;
+    };
+    content: string;
+    parentpost: {
+      _id: string;
+    };
+    image1: string;
   };
   const [current_user, set_current_user] = useState<UserData | null>(null);
+  const [userPosts, setUserPosts] = useState<[UsersPost] | null>(null);
 
   useEffect(() => {
-    function fetchdata_fromlocalstorage() {
+    async function fetchdata_fromlocalstorage() {
       const data = localStorage.getItem('bond_user');
       if (data) {
-        set_current_user(JSON.parse(data).user);
+        const new_data = JSON.parse(data);
+
+        set_current_user(new_data);
+
+        const bk_url = `https://bond-hs2g.onrender.com/api/v1/posts`;
+        try {
+          await axios
+            .get(bk_url, {
+              headers: {
+                Authorization: `Bearer ${new_data.token}`,
+                'Content-Type': 'application/json',
+              },
+            })
+            .then((response) => {
+              setUserPosts(response.data.data);
+            });
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
     fetchdata_fromlocalstorage();
   }, []);
+
+  console.log(userPosts);
 
   return (
     <section
@@ -40,78 +67,43 @@ export default function LargeScreen_panelDash() {
         {/* Profile*/}
         <div className='w-full grid grid-cols-3 gap-x-5 p-5 pt-10'>
           <div className='col-span-1 flex justify-center'>
-            <div className='rounded-full w-[200px] overflow-hidden border-2 border-black'>
-              <Image src={User_pic} alt='user profile picture' />
+            <div className='rounded-full h-[200px] w-[200px] border border-black flex justify-center items-center'>
+              <CiUser className='text-[100px] p-2' />
             </div>
           </div>
-          <div className='col-span-1'>
-            <p className='mb-3 text-gray-500'>
-              {current_user && `@${current_user.username}`}
-            </p>
-            <p>
-              Software Engineer | Tech Enthusiast 🚀
-              <span className='block'>
-                Exploring the world one line of code at a time. 💻✨
-              </span>
-              <span className='block'>🔧 Skills & Tools</span>
-              <span className='block'>Languages: Python, JavaScript, Java</span>
-              <span className='block'>Frameworks: React, Django, Node.js</span>
-              <span className='block'>Tools: Git, Docker, AWS</span>
-            </p>
+          <div className='col-span-1 pt-10'>
+            {current_user && (
+              <>
+                <h1 className='font-semibold'>{`${current_user?.user.firstname.toUpperCase()} ${current_user?.user.lastname.toUpperCase()} `}</h1>
+                <p className='mb-3 text-gray-500'>
+                  {`@${current_user?.user.username}`}
+                </p>
+              </>
+            )}
           </div>
           <div className='col-span-1'></div>
         </div>
 
         {/* User Posts */}
         <div className='w-full pt-10 px-5 h-full'>
-          {/* <div className='w-full flex items-center px-5 bg-[#D0D4DA] h-[44px] font-medium text-lg'>
-            Your posts
-          </div> */}
           <hr className='w-full h-[2px] bg-black mb-10' />
           <div className='w-full h-full pb-20' id='transactions'>
             <div className='w-full grid grid-cols-3 gap-1 pb-10'>
-              <div className='aspect-square overflow-hidden'>
-                <Image
-                  src={User_pic6}
-                  alt='user profile picture'
-                  className='h-full object-cover'
-                />
-              </div>
-              <div className='aspect-square overflow-hidden'>
-                <Image
-                  src={User_pic1}
-                  alt='user profile picture'
-                  className='h-full object-cover'
-                />
-              </div>
-              <div className='aspect-square overflow-hidden'>
-                <Image
-                  src={User_pic2}
-                  alt='user profile picture'
-                  className='h-full object-cover'
-                />
-              </div>
-              <div className='aspect-square overflow-hidden'>
-                <Image
-                  src={User_pic3}
-                  alt='user profile picture'
-                  className='h-full object-cover'
-                />
-              </div>
-              <div className='aspect-square overflow-hidden'>
-                <Image
-                  src={User_pic4}
-                  alt='user profile picture'
-                  className='h-full object-cover'
-                />
-              </div>
-              <div className='aspect-square overflow-hidden'>
-                <Image
-                  src={User_pic5}
-                  alt='user profile picture'
-                  className='h-full object-cover'
-                />
-              </div>
+              {userPosts?.map((posts, index) => (
+                <>
+                  {posts.author._id === current_user?.user._id && (
+                    <div className='aspect-square overflow-hidden' key={index}>
+                      <Image
+                        src={posts.image1}
+                        alt='user profile picture'
+                        className='h-full object-cover w-full'
+                        width={100}
+                        height={100}
+                      />
+                    </div>
+                  )}
+                </>
+              ))}
             </div>
           </div>
         </div>
