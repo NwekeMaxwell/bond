@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Admin_Nav from './social-components/Nav';
-import CheckLogged from './social-components/CheckLogged';
+import Admin_Nav from './components/Nav';
+import CheckLogged from './components/CheckLogged';
 
 const inter = Inter({ subsets: ['latin'] });
 
