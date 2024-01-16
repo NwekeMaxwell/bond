@@ -67,8 +67,6 @@ export default function UsersData() {
   }
   return (
     <div className='pt-5'>
-      {/* <h1 className='text-center my-10 font-bold text-5xl'>Bond</h1> */}
-
       {users_data?.map((post, index) => (
         <div className='w-full flex p-5 border-t border-t-black' key={index}>
           <div className='rounded-full h-[40px] w-[40px] border border-black flex justify-center items-center'>

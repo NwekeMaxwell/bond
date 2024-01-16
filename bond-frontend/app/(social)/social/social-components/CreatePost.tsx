@@ -2,8 +2,6 @@ import axios from 'axios';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-// Cloudinary
-// import { CldUploadWidget } from 'next-cloudinary';
 
 type CreatingPost = {
   createPost: boolean;
@@ -117,8 +115,6 @@ export default function CreatePost({
       setCreatePost(!createPost);
     }
   };
-
-  // Cloudinary
 
   return (
     <>
