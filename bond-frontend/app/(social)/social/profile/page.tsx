@@ -1,5 +1,5 @@
 'use client';
-import Right_panel_dashboard from "../social-components/Profile_Right-panel-dashboard";
+import Right_panel_dashboard from '../components/Profile_Right-panel-dashboard';
 
 export default function page() {
   return (
