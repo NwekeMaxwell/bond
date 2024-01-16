@@ -3,8 +3,9 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { CiUser } from 'react-icons/ci';
+import { UsersPost } from '../Types/UserDataTypes';
 
-export default function LargeScreen_panelDash() {
+export default function Profile_LargeScreen_panelDash() {
   type UserData = {
     user: {
       username: string;
@@ -14,18 +15,6 @@ export default function LargeScreen_panelDash() {
     };
   };
 
-  type UsersPost = {
-    _id: string;
-    author: {
-      username: string;
-      _id: string;
-    };
-    content: string;
-    parentpost: {
-      _id: string;
-    };
-    image1: string;
-  };
   const [current_user, set_current_user] = useState<UserData | null>(null);
   const [userPosts, setUserPosts] = useState<[UsersPost] | null>(null);
 
@@ -56,8 +45,6 @@ export default function LargeScreen_panelDash() {
     }
     fetchdata_fromlocalstorage();
   }, []);
-
-  console.log(userPosts);
 
   return (
     <section

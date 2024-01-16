@@ -8,18 +8,9 @@ import User_pic4 from '../Social-assets/pic4.jpg';
 import User_pic5 from '../Social-assets/pic5.jpg';
 import User_pic6 from '../Social-assets/pic6.jpg';
 import { useEffect, useState } from 'react';
+import { UserData } from '../Types/UserDataTypes';
 
-export default function SmallScreen_panelDash() {
-  type UserData = {
-    createdAt: string;
-    email: string;
-    firstname: string;
-    lastname: string;
-    updatedAt: string;
-    username: string;
-    _v: number;
-    _id: string;
-  };
+export default function Profile_SmallScreen_panelDash() {
   const [current_user, set_current_user] = useState<UserData | null>(null);
 
   useEffect(() => {
@@ -31,7 +22,6 @@ export default function SmallScreen_panelDash() {
     }
     fetchdata_fromlocalstorage();
   }, []);
-  // console.log(current_user);
   return (
     <>
       <section className='w-full max-h-[100vh] md:hidden '>
@@ -64,7 +54,6 @@ export default function SmallScreen_panelDash() {
               <span className='block'>Tools: Git, Docker, AWS</span>
             </p>
           </div>
-          {/* </div> */}
         </div>
 
         {/* User post */}
